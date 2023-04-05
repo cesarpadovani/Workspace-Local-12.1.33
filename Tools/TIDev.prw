@@ -4654,6 +4654,7 @@ Static Function FolderExp(oDlg)
             @ 03, 02 BITMAP oBmp01 NAME "BMPDEL"    SIZE 015,015 OF oPBR PIXEL NOBORDER ON CLICK MsgRun("Apagando Arquivo...", "Aguarde.", {|| FApaga(cPath02, oList02), LeDirect(oList02, oGet2, @cPath02)})
             @ 03, 17 BITMAP oBmp01 NAME "SDUDRPTBL" SIZE 015,015 OF oPBR PIXEL NOBORDER ON CLICK Processa({|| FApaga(cPath02, oList02, .T.), LeDirect(oList02, oGet2, @cPath02)}, "Exclusão de arquivos", "Excluindo", .T.)
 
+            @ 03, 32 BITMAP oBmp01 NAME "AVG_IADD" SIZE 015,015 OF oPBR PIXEL NOBORDER ON CLICK MsgRun("Criando pasta...", "Aguarde.", {|| FMkDir(cPath02, oList02), LeDirect(oList02, oGet2, @cPath02)})
 
     LeDirect(oList01, oGet1, @cPath01)
     LeDirect(oList02, oGet2, @cPath02)
@@ -4811,6 +4812,22 @@ Static Function FApaga(cPathOri, oObjList, lEraseMult)
 
 Return
 
+Static Function FMkDir(cPathOri, oObjList, lEraseMult)
+
+Local aRet 		:= {}
+Local aParamBox	:= {}
+Local cxPasta   := ""
+
+AAdd( aParamBox,{1,"Nova Pasta", Space(10),"","","","",0,.F.})
+
+If ParamBox( aParamBox,"Nova Pasta",@aRet, { || .T. } )
+    
+    cxPasta := Alltrim(aRet[1])
+
+    MakeDir(AllTrim(cPathOri) + "\"+cxPasta)
+EndIf
+
+Return
 
 Static Function MaskDir()
 
