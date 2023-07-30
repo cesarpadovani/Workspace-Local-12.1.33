@@ -1,0 +1,16 @@
+-- BACKUP
+DECLARE @name varchar(256), @campo varchar(10)
+DECLARE TABELA SCROLL CURSOR FOR 
+SELECT name FROM sysobjects WHERE xtype = 'U' AND SUBSTRING(name,1,2) = 'SE' AND SUBSTRING(name,4,10) = '030' ORDER BY name
+
+OPEN TABELA
+FETCH FIRST FROM TABELA INTO @name
+WHILE @@FETCH_STATUS = 0
+	BEGIN
+	PRINT 'Gerando backup ' + @name + '...'
+	EXEC('SELECT * INTO ' + @name + '_BKP_20121021 FROM '+ @name)
+	
+	FETCH NEXT FROM TABELA INTO @name
+END
+CLOSE TABELA
+DEALLOCATE TABELA
